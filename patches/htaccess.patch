@@ -1,5 +1,5 @@
 diff --git a/web/.htaccess b/web/.htaccess
-index 440cabc..f3548f6 100644
+index 440cabc..139341b 100644
 --- a/web/.htaccess
 +++ b/web/.htaccess
 @@ -99,6 +99,11 @@ DirectoryIndex index.php index.html index.htm
@@ -14,3 +14,11 @@ index 440cabc..f3548f6 100644
    # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
    # VirtualDocumentRoot and the rewrite rules are not working properly.
    # For example if your site is at http://example.com/drupal uncomment and
+@@ -114,6 +119,7 @@ DirectoryIndex index.php index.html index.htm
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_URI} !=/favicon.ico
++RewriteCond %{REQUEST_URI} !/Shibboleth.sso/.*$ [NC]
+   RewriteRule ^ index.php [L]
+ 
+   # Rules to correctly serve gzip compressed CSS and JS files.
