@@ -1,20 +1,26 @@
 diff --git a/web/.htaccess b/web/.htaccess
-index 440cabc..139341b 100644
+index 440cabc..ac886b7 100644
 --- a/web/.htaccess
 +++ b/web/.htaccess
-@@ -99,6 +99,11 @@ DirectoryIndex index.php index.html index.htm
+@@ -99,6 +99,9 @@ DirectoryIndex index.php index.html index.htm
    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
    # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
  
-+# BEGIN CUSTOMIZATIONS
 +RewriteCond %{HTTPS} off
 +RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-+# END CUSTOMIZATIONS
 +
    # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
    # VirtualDocumentRoot and the rewrite rules are not working properly.
    # For example if your site is at http://example.com/drupal uncomment and
-@@ -114,6 +119,7 @@ DirectoryIndex index.php index.html index.htm
+@@ -107,13 +110,14 @@ DirectoryIndex index.php index.html index.htm
+   #
+   # If your site is running in a VirtualDocumentRoot at http://example.com/,
+   # uncomment the following line:
+-  # RewriteBase /
++RewriteBase /
+ 
+   # Pass all requests not referring directly to files in the filesystem to
+   # index.php. Clean URLs are handled in drupal_environment_initialize().
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteCond %{REQUEST_FILENAME} !-d
    RewriteCond %{REQUEST_URI} !=/favicon.ico
@@ -22,3 +28,12 @@ index 440cabc..139341b 100644
    RewriteRule ^ index.php [L]
  
    # Rules to correctly serve gzip compressed CSS and JS files.
+@@ -147,3 +151,8 @@ DirectoryIndex index.php index.html index.htm
+   # Disable content sniffing, since it's an attack vector.
+   Header always set X-Content-Type-Options nosniff
+ </IfModule>
++
++AuthType Shibboleth
++ShibRequireSession Off
++ShibUseHeaders On
++require shibboleth
