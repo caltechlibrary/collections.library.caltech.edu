@@ -1,8 +1,8 @@
 diff --git a/web/.htaccess b/web/.htaccess
-index 440cabc..ac886b7 100644
+index 37fce10..e065301 100644
 --- a/web/.htaccess
 +++ b/web/.htaccess
-@@ -99,6 +99,9 @@ DirectoryIndex index.php index.html index.htm
+@@ -104,6 +104,9 @@ DirectoryIndex index.php index.html index.htm
    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
    # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
  
@@ -12,7 +12,7 @@ index 440cabc..ac886b7 100644
    # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
    # VirtualDocumentRoot and the rewrite rules are not working properly.
    # For example if your site is at http://example.com/drupal uncomment and
-@@ -107,13 +110,14 @@ DirectoryIndex index.php index.html index.htm
+@@ -112,13 +115,14 @@ DirectoryIndex index.php index.html index.htm
    #
    # If your site is running in a VirtualDocumentRoot at http://example.com/,
    # uncomment the following line:
@@ -28,7 +28,7 @@ index 440cabc..ac886b7 100644
    RewriteRule ^ index.php [L]
  
    # Rules to correctly serve gzip compressed CSS and JS files.
-@@ -147,3 +151,8 @@ DirectoryIndex index.php index.html index.htm
+@@ -152,3 +156,8 @@ DirectoryIndex index.php index.html index.htm
    # Disable content sniffing, since it's an attack vector.
    Header always set X-Content-Type-Options nosniff
  </IfModule>
