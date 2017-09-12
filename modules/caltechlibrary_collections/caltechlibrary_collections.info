@@ -2,4 +2,7 @@ name = Caltech Library Collections
 description = Customizations for the Caltech Library Collections site.
 core = 7.x
 package = Caltech Library
-version = 7.x-1.0-alpha1
+version = 7.x-1.0-alpha2
+
+files[] = includes/views/caltechlibrary_collections.views.inc
+files[] = includes/views/handlers/caltechlibrary_collections_handler_field_comment_node_link.inc

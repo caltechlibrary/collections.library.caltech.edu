@@ -5,10 +5,20 @@
  */
 
 /**
+ * Implements hook_views_api().
+ */
+function caltechlibrary_collections_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'caltechlibrary_collections') . '/includes/views',
+  );
+}
+
+/**
  * Implements hook_module_implements_alter().
  */
 function caltechlibrary_collections_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'node_view' && isset($implementations['caltechlibrary_collections'])) {
+  if ($hook == 'views_data_alter') {
     $group = $implementations['caltechlibrary_collections'];
     unset($implementations['caltechlibrary_collections']);
     $implementations['caltechlibrary_collections'] = $group;
@@ -18,7 +28,7 @@ function caltechlibrary_collections_module_implements_alter(&$implementations, $
 /**
  * Implements hook_node_view().
  */
-function caltechlibrary_collections_node_view($node, $view_mode, $langcode) {
+function caltechlibrary_collections_node_view($node, $view_mode) {
   $links = array();
 
   if ($node->comment != COMMENT_NODE_HIDDEN) {
@@ -58,8 +68,8 @@ function caltechlibrary_collections_node_view($node, $view_mode, $langcode) {
       if ($node->comment == COMMENT_NODE_OPEN) {
         if (user_access('post comments')) {
           $links['comment-add'] = array(
-            'title' => t('+ Add comment'),
-            'href' => "comment/reply/$node->nid",
+            'title' => t('+ comment'),
+            'href' => "node/$node->nid",
             'attributes' => array('title' => t('Add a new comment.')),
             'fragment' => 'comment-form',
           );
@@ -84,7 +94,7 @@ function caltechlibrary_collections_node_view($node, $view_mode, $langcode) {
           // if there are existing comments that the link will skip past.
           if ($comment_form_location == COMMENT_FORM_SEPARATE_PAGE || (!empty($node->comment_count) && user_access('access comments'))) {
             $links['comment-add'] = array(
-              'title' => t('Add new comment'),
+              'title' => t('+ comment'),
               'attributes' => array('title' => t('Share your thoughts and opinions related to this posting.')),
               'href' => "node/$node->nid",
               'fragment' => 'comment-form',
@@ -167,22 +177,22 @@ function caltechlibrary_collections_comment_post_forbidden($variables) {
         // We change the login links to use Shibboleth instead of Drupal.
         if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
           // Users can register themselves.
-          return t('<a href="@login">Log in</a> or <a href="@register">register</a> to post comments', array('@login' => shib_auth_generate_login_url(), '@register' => url('user/register', array('query' => $destination))));
+          return t('<a href="@login">log in</a> or <a href="@register">register</a> to post comments', array('@login' => shib_auth_generate_login_url(), '@register' => url('user/register', array('query' => $destination))));
         }
         else {
           // Only admins can add new users, no public registration.
-          return t('<a href="@login">Log in</a> to comment', array('@login' => shib_auth_generate_login_url()));
+          return t('<a href="@login">log in</a> to comment', array('@login' => shib_auth_generate_login_url()));
         }
       }
       else {
         // We use the default functionality.
         if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
           // Users can register themselves.
-          return t('<a href="@login">Log in</a> or <a href="@register">register</a> to post comments', array('@login' => url('user/login', array('query' => $destination)), '@register' => url('user/register', array('query' => $destination))));
+          return t('<a href="@login">log in</a> or <a href="@register">register</a> to post comments', array('@login' => url('user/login', array('query' => $destination)), '@register' => url('user/register', array('query' => $destination))));
         }
         else {
           // Only admins can add new users, no public registration.
-          return t('<a href="@login">Log in</a> to post comments', array('@login' => url('user/login', array('query' => $destination))));
+          return t('<a href="@login">log in</a> to comment', array('@login' => url('user/login', array('query' => $destination))));
         }
       }
     }
