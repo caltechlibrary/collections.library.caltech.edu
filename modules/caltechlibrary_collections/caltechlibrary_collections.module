@@ -198,3 +198,22 @@ function caltechlibrary_collections_comment_post_forbidden($variables) {
     }
   }
 }
+
+/**
+ * Implements hook_filter_info_alter().
+ */
+function caltechlibrary_collections_filter_info_alter(&$info) {
+  $info['filter_mathjax']['tips callback'] = '_caltechlibrary_collections_mathjax_filter_tips';
+}
+
+/**
+ * Filter tips callback for the mathjax filter.
+ */
+function _caltechlibrary_collections_mathjax_filter_tips($filter, $format, $long = FALSE) {
+  return t('<span class="tex2jax_ignore">Mathematics are rendered by
+    <a href="@url">MathJax</a>. The default math delimiters are $$…$$ and \[…\]
+    for displayed mathematics, and $…$ and \(…\) for in-line mathematics. Type
+    \$ for a literal dollar sign.</span>',
+    array('@url' => url('https://www.mathjax.org/'))
+  );
+}
