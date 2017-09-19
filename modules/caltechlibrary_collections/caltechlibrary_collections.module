@@ -193,6 +193,39 @@ function caltechlibrary_collections_comment_post_forbidden($variables) {
 }
 
 /**
+ * Implements hook_block_info().
+ */
+function caltechlibrary_collections_block_info() {
+  $blocks = array();
+  $blocks['comment_login'] = array(
+    'info' => t('Anonymous, log in to comment'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function caltechlibrary_collections_block_view($delta = '') {
+  $block = array();
+  switch($delta) {
+    case 'comment_login' :
+      $block['content'] = _caltechlibrary_collections_comment_login_helper();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Custom render function for comment_login block.
+ */
+function _caltechlibrary_collections_comment_login_helper() {
+  $variables = array();
+  $variables['node'] = menu_get_object();
+  return caltechlibrary_collections_comment_post_forbidden($variables);
+}
+
+/**
  * Implements hook_filter_info_alter().
  */
 function caltechlibrary_collections_filter_info_alter(&$info) {
